@@ -8,12 +8,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use(cors({
-    origin: ['https://final-fullstack-vert.vercel.app'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-}));
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "https://final-fullstack-vert.vercel.app/");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    next();
+})
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
